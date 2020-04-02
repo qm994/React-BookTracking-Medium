@@ -2,8 +2,25 @@ import React, { Component } from "react";
 
 class SearchBooksList extends Component {
     
+    updateBookStatus = (event, book) => {
+        const val = event.target.value;
+        
+        // const bookObj = {
+        //     id: book.id,
+        //     imageURL: book.imageLinks.thumbnail,
+        //     title: book.title,
+        //     authors: book.authors
+        // };
+        // this.props.moveToReading(bookObj);
+        
+        console.log(`The value is ${val}`);
+        console.log(`The current book is ${book.title}`)
+    }
+
     render(){
-        const booklist = this.props;
+        // const {booklist, readingOnes, moveToReading} = this.props;
+        const booklist = this.props.searchresult;
+        
         console.log(`the new props data is ${this.props.searchresult}`)
         return(
             <ol className="books-grid">
@@ -16,7 +33,7 @@ class SearchBooksList extends Component {
 
                                 </div>
                                 <div className="book-shelf-changer">
-                                    <select>
+                                    <select onChange={(event) => this.updateBookStatus(event, book)}>
                                         <option value="move" disabled>Move to...</option>
                                         <option value="currentlyReading">Currently Reading</option>
                                         <option value="wantToRead">Want to Read</option>

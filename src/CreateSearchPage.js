@@ -26,7 +26,6 @@ class CreateSearchPage extends Component{
         })
     }
   };
-  
 
   render(){
     const {query, searchbooks} = this.state;
@@ -50,9 +49,11 @@ class CreateSearchPage extends Component{
             </div>
           </div>
           <div className="search-books-results">
-            {console.log(searchbooks)}
-            
-            <SearchBooksList searchresult={searchbooks}/>
+            <SearchBooksList
+             searchresult={searchbooks}
+             readingOnes={this.props.readingOnes}
+             moveToReading={this.props.onChangeReadingOnes}
+              />
           </div>
         </div>
       )
