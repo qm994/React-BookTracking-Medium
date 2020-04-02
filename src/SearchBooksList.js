@@ -2,8 +2,9 @@ import React, { Component } from "react";
 
 class SearchBooksList extends Component {
     
-    updateBookStatus = (event) => {
+    updateBookStatus = (event, book) => {
         const val = event.target.value;
+        
         // const bookObj = {
         //     id: book.id,
         //     imageURL: book.imageLinks.thumbnail,
@@ -11,8 +12,9 @@ class SearchBooksList extends Component {
         //     authors: book.authors
         // };
         // this.props.moveToReading(bookObj);
+        
         console.log(`The value is ${val}`);
-        console.log(`The current book is ${event.target}`)
+        console.log(`The current book is ${book.title}`)
     }
 
     render(){
@@ -31,7 +33,7 @@ class SearchBooksList extends Component {
 
                                 </div>
                                 <div className="book-shelf-changer">
-                                    <select onChange={this.updateBookStatus}>
+                                    <select onChange={(event) => this.updateBookStatus(event, book)}>
                                         <option value="move" disabled>Move to...</option>
                                         <option value="currentlyReading">Currently Reading</option>
                                         <option value="wantToRead">Want to Read</option>
