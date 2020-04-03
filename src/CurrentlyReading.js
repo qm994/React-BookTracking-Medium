@@ -3,7 +3,6 @@ import React from "react";
 class CurrentlyReading extends React.Component{
     
     render(){
-        {console.log(this.props.readings)}
         return(
             <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
@@ -17,13 +16,13 @@ class CurrentlyReading extends React.Component{
                                             backgroundImage: `url(${book.imageLinks.thumbnail})`}}>
                                         </div>
                                         <div className="book-shelf-changer">
-                                        <select>
-                                            <option value="move" disabled>Move to...</option>
-                                            <option value="currentlyReading">Currently Reading</option>
-                                            <option value="wantToRead">Want to Read</option>
-                                            <option value="read">Read</option>
-                                            <option value="none">None</option>
-                                        </select>
+                                            <select>
+                                                <option value="move" disabled>Move to...</option>
+                                                <option value="currentlyReading">Currently Reading</option>
+                                                <option value="wantToRead">Want to Read</option>
+                                                <option value="read">Read</option>
+                                                <option value="none">None</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div className="book-title">{book.title}</div>
