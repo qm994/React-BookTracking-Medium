@@ -1,7 +1,6 @@
 import React from "react";
 
 class CurrentlyReading extends React.Component{
-    
     render(){
         return(
             <div className="bookshelf">
@@ -16,7 +15,7 @@ class CurrentlyReading extends React.Component{
                                             backgroundImage: `url(${book.imageLinks.thumbnail})`}}>
                                         </div>
                                         <div className="book-shelf-changer">
-                                            <select>
+                                            <select onChange={(event) => this.props.onChange(event, book)}>
                                                 <option value="move" disabled>Move to...</option>
                                                 <option value="currentlyReading">Currently Reading</option>
                                                 <option value="wantToRead">Want to Read</option>
