@@ -20,8 +20,14 @@ class CreateSearchPage extends Component{
     if(this.state.query !== prevState.query && this.state.query !== ""){
       BooksAPI.search(this.state.query)
         .then((books) => {
+          !books.error &&  
           this.setState(() => ({
             searchbooks: books
+          }))
+        })
+        .catch((err) => {
+          this.setState((currentState) => ({
+            searchbooks: currentState.searchbooks
           }))
         })
     }
@@ -29,7 +35,6 @@ class CreateSearchPage extends Component{
 
   render(){
     const {query, searchbooks} = this.state;
-    
       return(
         <div className="search-books">
           <div className="search-books-bar">
@@ -49,6 +54,7 @@ class CreateSearchPage extends Component{
             </div>
           </div>
           <div className="search-books-results">
+            {/* {console.log(searchbooks)} */}
             <SearchBooksList
              searchresult={searchbooks}
              readingOnes={this.props.readingOnes}

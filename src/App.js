@@ -15,7 +15,7 @@ class BooksApp extends React.Component {
     // allbooks array state used to store all books in main page
     allbooks: [],
     currentlyReading: []
-  }
+  };
 
   changeSearchPage = () => {
     this.setState(() => ({
@@ -23,13 +23,15 @@ class BooksApp extends React.Component {
     }))
   };
 
+  // update the currentlyReading state
   onChangeReadingOnes = (newone) => {
     this.setState((currentState) => ({
-      currentlyReading: [...currentState, newone]
+      currentlyReading: [...currentState.currentlyReading, newone]
     }))
   }
 
   render() {
+    {console.log(this.state.currentlyReading)}
     return (
       <div className="app">
         {this.state.showSearchPage 
