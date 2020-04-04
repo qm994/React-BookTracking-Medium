@@ -18,16 +18,22 @@ class CreateMainPage extends React.Component{
         };
         BooksAPI.update(bookObj, newShelve) 
             .then((update) => (
-                alert(update)
-            ))
+                // will return an object with 3 shelve arrays inside and 
+                // inside each array: there will be ids for each shelve books;
+                //alert(update)
+                console.log(update)
+            ));
     };
-    
+
+   
     render(){
         // // const {readings, wantRead, read} = this.props;
         const readings = this.props.currentlyReading;
         const wantRead = this.props.wantToRead;
         const read = this.props.read;
+        const readingBooks = this.props.readingBooks;
 
+        console.log(`let see if readings change: ${this.props.readingBooks}`)
         return(
             <div className="list-books">
             <div className="list-books-title">
@@ -35,7 +41,7 @@ class CreateMainPage extends React.Component{
             </div>
             <div className="list-books-content">
               <div>
-                <CurrentlyReading readings={readings} onChange={this.updateBookStatus}/>
+                <CurrentlyReading readings={readings} onChange={this.updateBookStatus} readingBooks={readingBooks}/>
                 <WantToRead wantRead={wantRead} onChange={this.updateBookStatus}/>
                 <Read read={read} onChange={this.updateBookStatus}/>
               </div>

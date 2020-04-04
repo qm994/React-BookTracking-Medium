@@ -1,12 +1,33 @@
 import React from "react";
 
 class CurrentlyReading extends React.Component{
+
+    // componentDidUpdate(prevProps){
+        
+    // };
+    
+
     render(){
+        const books = this.props.readingBooks;
+        console.log(books)
+        // console.log(books[["Entries"]]);
+        console.log(typeof(books));
+        let KEYS = [];
+        let VALUES = [];
+        for (const book of books) {
+            
+            let [key, value] = book;
+            console.log(key, value);
+            KEYS.push(key);
+            VALUES.push(value);
+            
+        }
+
         return(
             <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
-                    <ol className="books-grid">
+                    <ol className="books-grid">  
                         {this.props.readings.map((book) => (
                             <li key={book.id}>
                                 <div className="book">
