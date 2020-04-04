@@ -16,79 +16,104 @@ class BooksApp extends React.Component {
     showSearchPage: false,
     // allbooks array state used to store all books in main page
     currentlyReading: [],
-    readingBooks: {},
+    readingsId: [],
+    //
     wantToRead: [],
-    read: []
+    wantReadId: [],
+    //
+    read: [],
+    readId: [],
+    //
+    allBooks: new Map()
   };
 
+  // used to return main page
   changeSearchPage = () => {
     this.setState(() => ({
       showSearchPage: false
     }))
   };
 
+  changeMainPage = () => {
+    this.setState(() => ({
+      showSearchPage: true
+    }))
+  }
+
   // update the currentlyReading state
   onChangeReadingOnes = (newone) => {
-    this.setState((currentState) => ({
-      currentlyReading: [...currentState.currentlyReading, newone]
-    }))
+    // this.setState((currentState) => ({
+    //   currentlyReading: [...currentState.currentlyReading, newone]
+    // }))
   };
 
-  // bookShelfMap = (books, shelf) => {
-  //   const readings = books.filter(book => book.shelf === shelf);
-  //   const readingsId = readings.map(book => book.id);
-  //   const readingBooks = new Map();
-  //   for(let i = 0; i < readingsId.length; i++){
-  //     readingBooks.set(readingsId[i], readings[i]);
-  //   };
-  // }
 
   // get all the books in main page Component insert into the DOM tree
-  componentDidMount(){
+  getAll = () => {
     BooksAPI.getAll()
         .then((books) => {
-            console.log(books);
-
-            // Map for currentlyReading;
+            //currentlyReading;
             const readings = books
               .filter(book => book.shelf === "currentlyReading");
             const readingsId = readings.map(book => book.id);
-            const readingBooks = new Map();
-            for(let i = 0; i < readingsId.length; i++){
-              readingBooks.set(readingsId[i], readings[i]);
-            };
-
-            // Map for wantToRead;
-            const wantRead = books
+           
+            const wantToRead = books
               .filter(book => book.shelf === "wantToRead")
-            const wantReadId = wantRead.map(book => book.id);
-            const wantReadBooks = new Map();
-            for(let i = 0; i < wantReadId.length; i++){
-              wantReadBooks.set(wantReadId[i], wantRead[i])
-            };
-            console.log(wantReadBooks);
-
-            // Map for read;
+            const wantToReadId = wantToRead.map(book => book.id);
+            
             const read = books
               .filter(book => book.shelf === "read"); 
             const readId = read.map(book => book.id);
-            const readBooks = new Map();
-            for(let i = 0; i < readId.length; i++){
-              readBooks.set(readId[i], read[i])
-            };
-            console.log(readBooks);
-
+           
             this.setState(() => ({
               currentlyReading: readings,
-              readingBooks: readingBooks,
-              wantToRead: wantRead,
-              read: read
-            }));
+              readingsId: readingsId,
+              //
+              wantToRead: wantToRead,
+              wantReadId: wantToReadId,
+              //
+              read: read,
+              readId: readId
+            })
+            );
         })
         .catch((error) => {
             alert("Something Went Wrong!")
         })
-      };
+  };
+
+  componentDidMount(){
+    this.getAll()
+  };
+
+  // happened when ids changed 
+  componentDidUpdate(prevProps, prevState){
+    if(JSON.stringify(prevState.readingsId) !== JSON.stringify(this.state.readingsId) && prevState.readingsId !== ""){
+      console.log("hahahhahaha")
+      this.getAll()
+    } 
+  }
+
+  updateBookStatus = (event, book) => {
+    const newShelve = event.target.value;
+    const options = event.target.options;
+    options[options.selectedIndex].setAttribute('selected', true);
+    const bookObj = {
+        id: book.id,
+    };
+    BooksAPI.update(bookObj, newShelve) 
+        .then((update) => {
+            // will return an object with 3 shelve arrays inside and 
+            // inside each array: there will be ids for each shelve books;
+            //alert(update)
+            this.setState(() => ({
+                readingsId: update.currentlyReading,
+                wantToReadId: update.wantToRead
+            }))
+                    
+        });
+};
+
 
   render() {
     return (
@@ -96,19 +121,27 @@ class BooksApp extends React.Component {
         {this.state.showSearchPage 
         ? (<CreateSearchPage
            clickfunc={this.changeSearchPage}
-           readingOnes={this.state.currentlyReading}
+           currentlyReading={this.state.currentlyReading}
            onChangeReadingOnes={this.onChangeReadingOnes}
            />) 
 
         : (<CreateMainPage 
+          // currentlyReading={this.state.currentlyReading}
           currentlyReading={this.state.currentlyReading}
-          readingBooks={this.state.readingBooks}
           readingsId={this.state.readingsId}
           wantToRead={this.state.wantToRead}
+          wantReadId={this.state.wantToReadId}
           read={this.state.read}
-          />)
+          readId={this.state.readId}
+          allBooks={this.state.allBooks}
+          onChange={this.updateBookStatus}
+          getAll={this.getAll}
+          changeMainPage={this.changeMainPage}
+          />
+          )
           }
       </div>
+
     )
   }
 }

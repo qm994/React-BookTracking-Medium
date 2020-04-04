@@ -7,7 +7,7 @@ class WantToRead extends React.Component {
             <h2 className="bookshelf-title">Want to Read</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
-                  {this.props.wantRead.map((book) => (
+                  {this.props.wantToRead.map((book) => (
                     <li key={book.id}>
                       <div className="book">
                         <div className="book-top">
@@ -15,7 +15,7 @@ class WantToRead extends React.Component {
                             backgroundImage: `url(${book.imageLinks.thumbnail})`}}>
                           </div>
                           <div className="book-shelf-changer">
-                            <select onChange={(event) => this.props.onChange(event, book)}>
+                            <select value="wantToRead" onChange={(event) => this.props.onChange(event, book)}>
                               <option value="move" disabled>Move to...</option>
                               <option value="currentlyReading">Currently Reading</option>
                               <option value="wantToRead">Want to Read</option>

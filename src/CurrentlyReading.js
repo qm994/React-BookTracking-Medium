@@ -1,34 +1,15 @@
 import React from "react";
+import * as BooksAPI from "./BooksAPI";
 
 class CurrentlyReading extends React.Component{
 
-    // componentDidUpdate(prevProps){
-        
-    // };
-    
-
     render(){
-        const books = this.props.readingBooks;
-        console.log(books)
-        // console.log(books[["Entries"]]);
-        console.log(typeof(books));
-        let KEYS = [];
-        let VALUES = [];
-        for (const book of books) {
-            
-            let [key, value] = book;
-            console.log(key, value);
-            KEYS.push(key);
-            VALUES.push(value);
-            
-        }
-
         return(
             <div className="bookshelf">
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">  
-                        {this.props.readings.map((book) => (
+                        {this.props.readingBooks.map((book) => (
                             <li key={book.id}>
                                 <div className="book">
                                     <div className="book-top">
@@ -36,7 +17,7 @@ class CurrentlyReading extends React.Component{
                                             backgroundImage: `url(${book.imageLinks.thumbnail})`}}>
                                         </div>
                                         <div className="book-shelf-changer">
-                                            <select onChange={(event) => this.props.onChange(event, book)}>
+                                            <select value="currentlyReading" onChange={(event) => this.props.onChange(event, book)}>
                                                 <option value="move" disabled>Move to...</option>
                                                 <option value="currentlyReading">Currently Reading</option>
                                                 <option value="wantToRead">Want to Read</option>
