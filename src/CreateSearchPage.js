@@ -6,6 +6,7 @@ import SearchBooksList from "./SearchBooksList";
 class CreateSearchPage extends Component{
   state={
     query: "",
+    // store all search books object
     searchbooks: []
   };
 
@@ -17,6 +18,7 @@ class CreateSearchPage extends Component{
   };
 
   componentDidUpdate(prevProps, prevState){
+
     if(this.state.query !== prevState.query && this.state.query !== ""){
       BooksAPI.search(this.state.query)
         .then((books) => {
@@ -57,7 +59,7 @@ class CreateSearchPage extends Component{
             {/* {console.log(searchbooks)} */}
             <SearchBooksList
              searchresult={searchbooks}
-             readingOnes={this.props.readingOnes}
+             readingOnes={this.props.currentlyReading}
              moveToReading={this.props.onChangeReadingOnes}
               />
           </div>

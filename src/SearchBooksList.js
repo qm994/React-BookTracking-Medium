@@ -16,9 +16,6 @@ class SearchBooksList extends Component {
     }
 
     render(){
-        // const {booklist, readingOnes, moveToReading} = this.props;
-        const booklist = this.props.searchresult;
-        
         console.log(`the new props data is ${this.props.searchresult}`)
         return(
             <ol className="books-grid">
