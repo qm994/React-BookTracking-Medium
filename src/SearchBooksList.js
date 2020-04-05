@@ -16,7 +16,7 @@ class SearchBooksList extends Component {
                         <div className="book">
                             <div className="book-top">
                                 <div className="book-cover" style={{ width: 128, height: 193,
-                                     backgroundImage: `url(${book.imageLinks.thumbnail})`}}>
+                                     backgroundImage: `url(${book.imageLinks ? book.imageLinks.smallThumbnail : ''})`}}>
                                 </div>
                                 <div className="book-shelf-changer">
                                     <select value={this.props.onChangeSearchBook(book)} onChange={(event) => this.props.onChange(event, book)}>
