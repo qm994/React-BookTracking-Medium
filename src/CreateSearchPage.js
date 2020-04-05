@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as BooksAPI from "./BooksAPI";
 import SearchBooksList from "./SearchBooksList";
 import ErrorBoundary from "./ErrorBoundary";
+import { Link } from "react-router-dom";
 
 class CreateSearchPage extends Component{
   state={
@@ -14,7 +15,7 @@ class CreateSearchPage extends Component{
   updateQuery = (event) => {
     const val = event.target.value;
     this.setState(()=> ({
-      query: val.trim()
+      query: val
     }));
   };
 
@@ -49,7 +50,8 @@ class CreateSearchPage extends Component{
       return(
         <div className="search-books">
           <div className="search-books-bar">
-            <button className="close-search" onClick={this.props.clickfunc}>Close</button>
+            {/* <button className="close-search" onClick={this.props.clickfunc}>Close</button> */}
+            <Link to="/" className="close-search">Close</Link>
             <div className="search-books-input-wrapper">
               <input type="text" placeholder="Search by title or author"
                 value={query} onChange={this.updateQuery}/>
