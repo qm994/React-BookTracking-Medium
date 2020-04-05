@@ -1,5 +1,8 @@
 # MyReads Project
 
+## Technical Knowledges Used In This Project
+
+React, React-Router, ES6
 
 ## TL;DR
 
