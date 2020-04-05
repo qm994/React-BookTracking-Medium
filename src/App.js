@@ -135,7 +135,7 @@ class BooksApp extends React.Component {
                 wantReadId={this.state.wantToReadId}
                 read={this.state.read}
                 readId={this.state.readId}
-                allBooks={this.state.allBooks}
+                //allBooks={this.state.allBooks}
                 onChange={this.updateBookStatus}
                 getAll={this.getAll}  
           />)}
@@ -144,7 +144,7 @@ class BooksApp extends React.Component {
           <Route path = "/search" 
             render = {() => (
               <CreateSearchPage
-              currentlyReading={this.state.currentlyReading}
+              //currentlyReading={this.state.currentlyReading}
               onChange={this.updateBookStatus}
               onChangeSearchBook={this.onChangeSearchBook}
            />)}
