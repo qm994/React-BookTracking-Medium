@@ -4,6 +4,7 @@ import wantToRead from "./WantToRead";
 import WantToRead from "./WantToRead";
 import Read from "./Read";
 import * as BooksAPI from "./BooksAPI";
+import { Link } from "react-router-dom";
 
 class CreateMainPage extends React.Component{
     render(){
@@ -45,7 +46,8 @@ class CreateMainPage extends React.Component{
             </div>
             
             <div className="open-search">
-              <button onClick={this.props.changeMainPage}>Add a book</button>
+              {/* <button onClick={this.props.changeMainPage}>Add a book</button> */}
+              <Link to="/search" className="toSearch">Add a Book</Link>
             </div>
           </div>
         )

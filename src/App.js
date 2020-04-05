@@ -4,6 +4,7 @@ import './App.css';
 import CreateSearchPage from "./CreateSearchPage";
 import CreateMainPage from "./CreateMainPage";
 import * as BooksAPI from "./BooksAPI";
+import { Route } from "react-router-dom";
 
 class BooksApp extends React.Component {
   state = {
@@ -13,7 +14,6 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false,
     // allbooks array state used to store all books in main page
     currentlyReading: [],
     readingsId: [],
@@ -30,19 +30,6 @@ class BooksApp extends React.Component {
   static getDerivedStateFromError(error) {
     return{hasError: true}
   };
-
-  // used to return main page
-  changeSearchPage = () => {
-    this.setState(() => ({
-      showSearchPage: false
-    }))
-  };
-
-  changeMainPage = () => {
-    this.setState(() => ({
-      showSearchPage: true
-    }))
-  }
 
   // set the select tag defualt in search page
   onChangeSearchBook = (book) => {
@@ -138,30 +125,30 @@ class BooksApp extends React.Component {
     console.log(this.state.wantToReadId)
     return (
       <div className="app">
-        {this.state.showSearchPage 
-        ? (
-        <CreateSearchPage
-           clickfunc={this.changeSearchPage}
-           currentlyReading={this.state.currentlyReading}
-           onChange={this.updateBookStatus}
-           onChangeSearchBook={this.onChangeSearchBook}
-           />) 
+            <Route exact path="/"
+              render = {() => (
+                <CreateMainPage 
+                // currentlyReading={this.state.currentlyReading}
+                currentlyReading={this.state.currentlyReading}
+                readingsId={this.state.readingsId}
+                wantToRead={this.state.wantToRead}
+                wantReadId={this.state.wantToReadId}
+                read={this.state.read}
+                readId={this.state.readId}
+                allBooks={this.state.allBooks}
+                onChange={this.updateBookStatus}
+                getAll={this.getAll}  
+          />)}
+        />  
 
-        : (<CreateMainPage 
-          // currentlyReading={this.state.currentlyReading}
-          currentlyReading={this.state.currentlyReading}
-          readingsId={this.state.readingsId}
-          wantToRead={this.state.wantToRead}
-          wantReadId={this.state.wantToReadId}
-          read={this.state.read}
-          readId={this.state.readId}
-          allBooks={this.state.allBooks}
-          onChange={this.updateBookStatus}
-          getAll={this.getAll}
-          changeMainPage={this.changeMainPage}
-          />
-          )
-          }
+          <Route path = "/search" 
+            render = {() => (
+              <CreateSearchPage
+              currentlyReading={this.state.currentlyReading}
+              onChange={this.updateBookStatus}
+              onChangeSearchBook={this.onChangeSearchBook}
+           />)}
+          />  
       </div>
 
     )
