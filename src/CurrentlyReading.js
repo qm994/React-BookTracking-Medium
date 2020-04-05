@@ -2,7 +2,6 @@ import React from "react";
 import * as BooksAPI from "./BooksAPI";
 
 class CurrentlyReading extends React.Component{
-
     render(){
         return(
             <div className="bookshelf">

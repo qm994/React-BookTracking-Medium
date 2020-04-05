@@ -24,7 +24,11 @@ class BooksApp extends React.Component {
     read: [],
     readId: [],
     //
-    allBooks: new Map()
+    hasError: false
+  };
+
+  static getDerivedStateFromError(error) {
+    return{hasError: true}
   };
 
   // used to return main page
@@ -40,13 +44,18 @@ class BooksApp extends React.Component {
     }))
   }
 
-  // update the currentlyReading state
-  onChangeReadingOnes = (newone) => {
-    // this.setState((currentState) => ({
-    //   currentlyReading: [...currentState.currentlyReading, newone]
-    // }))
+  // set the select tag defualt in search page
+  onChangeSearchBook = (book) => {
+    if(this.state.readingsId.includes(book.id)){
+      return("currentlyReading")
+    } else if(this.state.wantReadId.includes(book.id)){
+      return("wantToRead")
+    } else if(this.state.readId.includes(book.id)){
+      return("read")
+    } else{
+      return("none")
+    }
   };
-
 
   // get all the books in main page Component insert into the DOM tree
   getAll = () => {
@@ -88,7 +97,13 @@ class BooksApp extends React.Component {
 
   // happened when ids changed 
   componentDidUpdate(prevProps, prevState){
-    if(JSON.stringify(prevState.readingsId) !== JSON.stringify(this.state.readingsId) && prevState.readingsId !== ""){
+    if(
+      JSON.stringify(prevState.readingsId) !== JSON.stringify(this.state.readingsId)
+      ||
+      JSON.stringify(prevState.wantToReadId) !== JSON.stringify(this.state.wantToReadId)
+      ||
+      JSON.stringify(prevState.readId) !== JSON.stringify(this.state.readId)
+      ){
       console.log("hahahhahaha")
       this.getAll()
     } 
@@ -100,6 +115,9 @@ class BooksApp extends React.Component {
     options[options.selectedIndex].setAttribute('selected', true);
     const bookObj = {
         id: book.id,
+        imageURL: book.imageLinks.thumbnail,
+        title: book.title,
+        authors: book.authors
     };
     BooksAPI.update(bookObj, newShelve) 
         .then((update) => {
@@ -108,21 +126,25 @@ class BooksApp extends React.Component {
             //alert(update)
             this.setState(() => ({
                 readingsId: update.currentlyReading,
-                wantToReadId: update.wantToRead
-            }))
+                wantToReadId: update.wantToRead,
+                readId: update.read
+            }));
                     
         });
 };
 
 
   render() {
+    console.log(this.state.wantToReadId)
     return (
       <div className="app">
         {this.state.showSearchPage 
-        ? (<CreateSearchPage
+        ? (
+        <CreateSearchPage
            clickfunc={this.changeSearchPage}
            currentlyReading={this.state.currentlyReading}
-           onChangeReadingOnes={this.onChangeReadingOnes}
+           onChange={this.updateBookStatus}
+           onChangeSearchBook={this.onChangeSearchBook}
            />) 
 
         : (<CreateMainPage 
