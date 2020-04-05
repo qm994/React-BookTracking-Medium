@@ -1,22 +1,13 @@
 import React, { Component } from "react";
 
 class SearchBooksList extends Component {
-    
-    updateBookStatus = (event, book) => {
-        const val = event.target.value;
-        
-        const bookObj = {
-            id: book.id,
-            imageURL: book.imageLinks.thumbnail,
-            title: book.title,
-            authors: book.authors
-        };
-        this.props.moveToReading(bookObj);
-        console.log(bookObj)
-    }
+    errorHandling = (book) => {
+        if(book.imageLinks.thumbnail === undefined){
+            console.log(book.imageLinks.thumbnail === undefined)
+        }
+    };
 
     render(){
-        console.log(`the new props data is ${this.props.searchresult}`)
         return(
             <ol className="books-grid">
                 {(this.props.searchresult) && 
@@ -26,10 +17,9 @@ class SearchBooksList extends Component {
                             <div className="book-top">
                                 <div className="book-cover" style={{ width: 128, height: 193,
                                      backgroundImage: `url(${book.imageLinks.thumbnail})`}}>
-
                                 </div>
                                 <div className="book-shelf-changer">
-                                    <select onChange={(event) => this.updateBookStatus(event, book)}>
+                                    <select value={this.props.onChangeSearchBook(book)} onChange={(event) => this.props.onChange(event, book)}>
                                         <option value="move" disabled>Move to...</option>
                                         <option value="currentlyReading">Currently Reading</option>
                                         <option value="wantToRead">Want to Read</option>

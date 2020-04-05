@@ -6,36 +6,11 @@ import Read from "./Read";
 import * as BooksAPI from "./BooksAPI";
 
 class CreateMainPage extends React.Component{
-
-    // update the book shelve
-    updateBookStatus = (event, book) => {
-        const newShelve = event.target.value;
-        const options = event.target.options;
-        options[options.selectedIndex].setAttribute('selected', true);
-
-        const bookObj = {
-            id: book.id,
-            imageURL: book.imageLinks.thumbnail,
-            title: book.title,
-            authors: book.authors
-        };
-        BooksAPI.update(bookObj, newShelve) 
-            .then((update) => {
-                // will return an object with 3 shelve arrays inside and 
-                // inside each array: there will be ids for each shelve books;
-                //alert(update)
-                            
-
-            });
-    };
-
-   
     render(){
         // // const {readings, wantRead, read} = this.props;
         const currentlyReading = this.props.currentlyReading;
         const wantToRead = this.props.wantToRead;
         const read = this.props.read;
-        const allBooks = this.props.allBooks;
 
         const readingsId = this.props.readingsId;
         const wantToReadId = this.props.wantToReadId;
@@ -60,7 +35,12 @@ class CreateMainPage extends React.Component{
                  wantToReadId={wantToReadId}
                  getAll={this.props.getAll}/>
 
-                <Read read={read} onChange={this.updateBookStatus}/>
+                <Read
+                 onChange={this.props.onChange}
+                 read={read}
+                 readId={readId}
+                 getAll={this.props.getAll}
+                />
               </div>
             </div>
             
