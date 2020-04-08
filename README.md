@@ -4,6 +4,10 @@
 
 React, React-Router, ES6
 
+## The errors and stuck I have met in this project;
+
+* Once I was trying to set a state called `allBooks` which is a Map type to store all the books in the main page and use their `book.id` as the key; The good things is I successfully create the Map and pass it child component. But when I used the prop in child component I kept meeting the error said this Map isnt iteratable. So I `console.log` the prop and it actually said the prop is a Map object. After almost one afternoon figure out what happened, I finally found out that the real reason was when I created the state in `app.js`, I did this `allBook: []` which `allBooks` is an Object rather than a Map. `Obejct equals to Map` BUT `Map NOT Eqauls to Object`
+
 ## TL;DR
 
 To get started developing right away:
